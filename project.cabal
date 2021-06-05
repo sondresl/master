@@ -1,0 +1,103 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 1b9669ff7d0585b2b27b783542c84ebfc20057e208c5a65d2455f28b027dce92
+
+name:           project
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/project#readme>
+homepage:       https://github.com/githubuser/project#readme
+bug-reports:    https://github.com/githubuser/project/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/project
+
+library
+  exposed-modules:
+      AST
+      Lib
+      Logic
+  other-modules:
+      Paths_project
+  hs-source-dirs:
+      src
+  default-extensions: OverloadedStrings LambdaCase TupleSections ViewPatterns
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , extra
+    , lens
+    , lens-aeson
+    , mtl
+    , pretty-simple
+    , sbv
+    , text
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
+
+executable project-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_project
+  hs-source-dirs:
+      app
+  default-extensions: OverloadedStrings LambdaCase TupleSections ViewPatterns
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , extra
+    , lens
+    , lens-aeson
+    , mtl
+    , pretty-simple
+    , project
+    , sbv
+    , text
+    , unordered-containers
+    , vector
+  default-language: Haskell2010
+
+test-suite project-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_project
+  hs-source-dirs:
+      test
+  default-extensions: OverloadedStrings LambdaCase TupleSections ViewPatterns
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , containers
+    , extra
+    , lens
+    , lens-aeson
+    , mtl
+    , pretty-simple
+    , project
+    , sbv
+    , text
+    , unordered-containers
+    , vector
+  default-language: Haskell2010

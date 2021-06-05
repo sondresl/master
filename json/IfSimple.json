@@ -1,0 +1,166 @@
+{ "ModuleDecl":
+    { "ModuleName": "IfSimple"
+    , "Declarations": 
+        [ { "ClassName": "IfSimple"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            , { "Type": "Bool"
+              , "FieldName": "b"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "add"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "IfStmt":
+                        { "Condition": 
+                            { "FieldName": "b" }
+                        , "Then": 
+                                [ { "AssignStatement":
+                                    { "Variable": { "FieldName": "a" }
+                                    , "Value": 
+                                        { "Operator": "AddAddExp"
+                                        , "Left": 
+                                            { "FieldName": "a" }
+                                        , "Right": 
+                                            { "IntLiteral": 10 }
+                                        }
+                                      }
+                                  }
+                                , { "IfStmt":
+                                    { "Condition": 
+                                        { "Operator": "GTExp"
+                                        , "Left": 
+                                            { "FieldName": "a" }
+                                        , "Right": 
+                                            { "IntLiteral": 5 }
+                                        }
+                                    
+                                    , "Then": 
+                                            [ { "IfStmt":
+                                                { "Condition": 
+                                                    { "Operator": "LTExp"
+                                                    , "Left": 
+                                                        { "FieldName": "a" }
+                                                    , "Right": 
+                                                        { "IntLiteral": 50 }
+                                                    }
+                                                
+                                                , "Then": 
+                                                        [ { "AssignStatement":
+                                                            { "Variable": { "FieldName": "a" }
+                                                            , "Value": 
+                                                                { "IntLiteral": 0 }  }
+                                                          }
+                                                        , { "IfStmt":
+                                                            { "Condition": 
+                                                                { "Operator": "GTExp"
+                                                                , "Left": 
+                                                                    { "FieldName": "a" }
+                                                                , "Right": 
+                                                                    { "IntLiteral": 5 }
+                                                                }
+                                                            
+                                                            , "Then": 
+                                                                    [ { "AssignStatement":
+                                                                        { "Variable": { "FieldName": "a" }
+                                                                        , "Value": 
+                                                                            { "IntLiteral": 1 }  }
+                                                                      }
+                                                                    ]
+                                                            
+                                                            , "Else": 
+                                                                    [ { "AssignStatement":
+                                                                        { "Variable": { "FieldName": "a" }
+                                                                        , "Value": 
+                                                                            { "Operator": "SubAddExp"
+                                                                            , "Left": 
+                                                                                { "FieldName": "a" }
+                                                                            , "Right": 
+                                                                                { "IntLiteral": 100 }
+                                                                            }
+                                                                          }
+                                                                      }
+                                                                    ]
+                                                            }
+                                                          }
+                                                        ]
+                                                
+                                                , "Else": 
+                                                        [ { "AssignStatement":
+                                                            { "Variable": { "FieldName": "a" }
+                                                            , "Value": 
+                                                                { "Operator": "AddAddExp"
+                                                                , "Left": 
+                                                                    { "FieldName": "a" }
+                                                                , "Right": 
+                                                                    { "IntLiteral": 11 }
+                                                                }
+                                                              }
+                                                          }
+                                                        ]
+                                                }
+                                              }
+                                            ]
+                                    
+                                    , "Else": 
+                                            [ { "AssignStatement":
+                                                { "Variable": { "FieldName": "a" }
+                                                , "Value": 
+                                                    { "Operator": "AddAddExp"
+                                                    , "Left": 
+                                                        { "FieldName": "a" }
+                                                    , "Right": 
+                                                        { "IntLiteral": 10 }
+                                                    }
+                                                  }
+                                              }
+                                            ]
+                                    }
+                                  }
+                                ]
+                        
+                        , "Else": 
+                                [ { "AssignStatement":
+                                    { "Variable": { "FieldName": "a" }
+                                    , "Value": 
+                                        { "Operator": "MultMultExp"
+                                        , "Left": 
+                                            { "FieldName": "a" }
+                                        , "Right": 
+                                            { "IntLiteral": 10 }
+                                        }
+                                      }
+                                  }
+                                ]
+                        }
+                      }
+                    ]
+              }
+            , { "MethodName": "setB"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "b" }
+                        , "Value": 
+                            { "DataConstructor": "True" }
+                          }
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

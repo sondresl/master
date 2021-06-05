@@ -1,0 +1,63 @@
+{ "ModuleDecl":
+ { "ModuleName": "Example"
+ , "Declarations":
+  [ { "NotSupported": "InterfaceDecl" }
+  , { "ClassName": "CountImpl"
+   , "Parameters":
+        [ ]
+   , "Fields":
+   [ { "Type": "Int"
+   , "FieldName": "a"
+   , "InitExp": { "IntLiteral": 0 }
+   }
+   , { "Type": "Bool"
+   , "FieldName": "b"
+   , "InitExp": { "DataConstructor": "False" }
+   }
+   ]
+    , "Methods":
+   [ { "MethodName": "increment"
+     , "ReturnType": "Unit"
+     , "Params":
+    [ ]
+     , "Body":
+     [ { "IfStmt":
+      { "Condition":
+       { "FieldName": "b" }
+      , "Then":
+        [ { "AssignStatement":
+         { "Variable": { "FieldName": "a" }
+         , "Value":
+          { "Operator": "AddAddExp"
+          , "Left":
+           { "FieldName": "a" }
+          , "Right":
+           { "IntLiteral": 1 }
+          }
+          }
+         }
+        ]
+       }
+      }
+     ]
+    }
+   , { "MethodName": "setBool"
+     , "ReturnType": "Unit"
+     , "Params":
+      [ ]
+     , "Body":
+     [ { "AssignStatement":
+      { "Variable": { "FieldName": "b" }
+      , "Value":
+       { "Operator": "NegExp"
+       , "Value": { "FieldName": "b" }
+       }
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+}

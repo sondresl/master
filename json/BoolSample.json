@@ -1,0 +1,89 @@
+{ "ModuleDecl":
+    { "ModuleName": "BoolSam"
+    , "Declarations": 
+        [ { "ClassName": "Bools"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Bool"
+              , "FieldName": "a"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            , { "Type": "Bool"
+              , "FieldName": "b"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            , { "Type": "Bool"
+              , "FieldName": "c"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "setA"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value": 
+                            { "Operator": "OrBoolExp"
+                            , "Left": 
+                                { "FieldName": "b" }
+                            , "Right": 
+                                { "Operator": "NegExp"
+                                , "Value": { "FieldName": "b" }
+                                }
+                                
+                            }
+                          }
+                      }
+                    ]
+              }
+            , { "MethodName": "setB"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "b" }
+                        , "Value": 
+                            { "Operator": "OrBoolExp"
+                            , "Left": 
+                                { "Operator": "OrBoolExp"
+                                , "Left": 
+                                    { "FieldName": "a" }
+                                , "Right": 
+                                    { "Operator": "NegExp"
+                                    , "Value": { "FieldName": "a" }
+                                    }
+                                    
+                                }
+                                
+                            , "Right": 
+                                { "FieldName": "c" }
+                            }
+                          }
+                      }
+                    ]
+              }
+            , { "MethodName": "setC"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "c" }
+                        , "Value": 
+                            { "FieldName": "a" }  }
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

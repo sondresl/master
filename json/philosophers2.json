@@ -1,0 +1,292 @@
+{ "ModuleDecl":
+    { "ModuleName": "Philosophers2"
+    , "Declarations": 
+        [ { "InterfaceDecl":
+            { "Name": "Philosopher"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "behave"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "Fork"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "grab"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "z"
+                          , "ParamType": "Fork"  }
+                        , { "ParamName": "name"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "grab_second"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "name"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "Philosopher"
+          , "Parameters":
+            [ { "ParamName": "fork1"
+              , "ParamType": "Fork"  }
+            , { "ParamName": "fork2"
+              , "ParamType": "Fork"  }
+            , { "ParamName": "n"
+              , "ParamType": "Int"  }
+            ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "behave"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "fut"
+                            , "Type": 
+                                { "CompoundType": "Fut"
+                                , "TypeParameters":
+                                    [ "Unit"]
+                                }
+                            }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "VarName": "fut" }
+                            , "Value": 
+                                 { "AsyncCall": 
+                                    { "Callee": { "FieldName": "fork1" }
+                                    , "Method": "grab"
+                                    , "Params": 
+                                        [ { "FieldName": "fork2" }, { "FieldName": "n" }]
+                                    }
+                                }
+                             }
+                          }
+                        , { "ExprStmt": 
+                            { "GetExp":
+                                { "VarName": "fut" }}
+                            
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "u"
+                            , "Type": 
+                                "Unit"
+                            , "InitExp": { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "FnApp":
+                                            { "FnName": "intToString"
+                                            , "FnArgs": 
+                                                [ { "FieldName": "n" }]
+                                            }
+                                          }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": " releases forks and is thinking" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                            }
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "c"
+                            , "Type": 
+                                { "CompoundType": "Fut"
+                                , "TypeParameters":
+                                    [ "Unit"]
+                                }
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": "ThisExp"
+                                
+                                , "Method": "behave"
+                                , "Params": 
+                                    [ ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "Fork"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "grab"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "z"
+                          , "ParamType": "Fork"  }
+                        , { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "u"
+                            , "Type": 
+                                "Unit"
+                            , "InitExp": { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "FnApp":
+                                            { "FnName": "intToString"
+                                            , "FnArgs": 
+                                                [ { "VarName": "n" }]
+                                            }
+                                          }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": " grabs first fork" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                            }
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "f"
+                            , "Type": 
+                                { "CompoundType": "Fut"
+                                , "TypeParameters":
+                                    [ "Unit"]
+                                }
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "VarName": "z" }
+                                , "Method": "grab_second"
+                                , "Params": 
+                                    [ { "VarName": "n" }]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                            { "GetExp":
+                                { "VarName": "f" }}
+                            
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "grab_second"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "u"
+                            , "Type": 
+                                "Unit"
+                            , "InitExp": { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "FnApp":
+                                            { "FnName": "intToString"
+                                            , "FnArgs": 
+                                                [ { "VarName": "n" }]
+                                            }
+                                          }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": " grabs second fork" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                            }
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "v"
+                            , "Type": 
+                                "Unit"
+                            , "InitExp": { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "FnApp":
+                                            { "FnName": "intToString"
+                                            , "FnArgs": 
+                                                [ { "VarName": "n" }]
+                                            }
+                                          }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": " is eating" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}

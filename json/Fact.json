@@ -1,0 +1,418 @@
+{ "ModuleDecl":
+    { "ModuleName": "Fact"
+    , "Declarations": 
+        [ { "InterfaceDecl":
+            { "Name": "FactInt"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "fact"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "work"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "h"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "report"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "x"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "delegate"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "RunnerInt"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "fact"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "h"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "test"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "Fact"
+          , "Parameters":
+            [ { "ParamName": "boss"
+              , "ParamType": "FactInt"  }
+            , { "ParamName": "maxH"
+              , "ParamType": "Int"  }
+            ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "r"
+              , "InitExp": { "IntLiteral": 1 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "fact"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "VarName": "n" }
+                                , "Right": 
+                                    { "FieldName": "maxH" }
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "work"
+                                            , "Params": 
+                                                [ { "VarName": "n" }, { "FieldName": "maxH" }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "delegate"
+                                            , "Params": 
+                                                [ { "Operator": "SubAddExp"
+                                                , "Left": 
+                                                    { "VarName": "n" }
+                                                , "Right": 
+                                                    { "FieldName": "maxH" }
+                                                }
+                                                ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            , "Else": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "work"
+                                            , "Params": 
+                                                [ { "VarName": "n" }, { "VarName": "n" }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "report"
+                                            , "Params": 
+                                                [ { "IntLiteral": 1 }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "work"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "h"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "WhileStmt":
+                            { "Condition": 
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "VarName": "h" }
+                                , "Right": 
+                                    { "IntLiteral": 0 }
+                                }
+                            , "Body": 
+                                    [ { "AssignStatement":
+                                        { "Variable": { "FieldName": "r" }
+                                        , "Value": 
+                                            { "Operator": "MultMultExp"
+                                            , "Left": 
+                                                { "FieldName": "r" }
+                                            , "Right": 
+                                                { "VarName": "n" }
+                                            }
+                                         }
+                                      }
+                                    , { "AssignStatement":
+                                        { "Variable": { "VarName": "n" }
+                                        , "Value": 
+                                            { "Operator": "SubAddExp"
+                                            , "Left": 
+                                                { "VarName": "n" }
+                                            , "Right": 
+                                                { "IntLiteral": 1 }
+                                            }
+                                         }
+                                      }
+                                    , { "AssignStatement":
+                                        { "Variable": { "VarName": "h" }
+                                        , "Value": 
+                                            { "Operator": "SubAddExp"
+                                            , "Left": 
+                                                { "VarName": "h" }
+                                            , "Right": 
+                                                { "IntLiteral": 1 }
+                                            }
+                                         }
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "delegate"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "worker"
+                            , "Type": 
+                                "FactInt"
+                            , "InitExp":  { "NewExp": 
+                                { "IsLocal": false
+                                , "ClassName": "Fact"
+                                , "Params": 
+                                    [ "ThisExp"
+                                    , { "FieldName": "maxH" }]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": { "VarName": "worker" }
+                                , "Method": "fact"
+                                , "Params": 
+                                    [ { "VarName": "n" }]
+                                }
+                            }
+                            
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "report"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "x"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "r" }
+                            , "Value": 
+                                { "Operator": "MultMultExp"
+                                , "Left": 
+                                    { "FieldName": "r" }
+                                , "Right": 
+                                    { "VarName": "x" }
+                                }
+                             }
+                          }
+                        , { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "NotEqExp"
+                                , "Left": 
+                                    { "FieldName": "boss" }
+                                , "Right": 
+                                    "NullExp"
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": { "FieldName": "boss" }
+                                            , "Method": "report"
+                                            , "Params": 
+                                                [ { "FieldName": "r" }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "Runner"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "fact"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "h"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "f"
+                            , "Type": 
+                                "FactInt"
+                            , "InitExp":  { "NewExp": 
+                                { "IsLocal": false
+                                , "ClassName": "Fact"
+                                , "Params": 
+                                    [ "NullExp"
+                                    , { "VarName": "h" }]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": { "VarName": "f" }
+                                , "Method": "fact"
+                                , "Params": 
+                                    [ { "VarName": "n" }]
+                                }
+                            }
+                            
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "test"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": "ThisExp"
+                                
+                                , "Method": "fact"
+                                , "Params": 
+                                    [ { "IntLiteral": 2 }, { "IntLiteral": 1 }]
+                                }
+                            }
+                            
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}

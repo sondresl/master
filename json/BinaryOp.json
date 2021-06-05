@@ -1,0 +1,4 @@
+{ "BinaryOp": "SubAddExp"
+, "Left": { "IntLiteral": 10 }
+, "Right": { "VarUse": "a" }
+}

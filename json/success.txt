@@ -1,0 +1,60 @@
+ClassDecl
+    { className = "CountImpl"
+    , classParams = []
+    , classFields =
+        [ FieldDecl
+            { fieldName = "a"
+            , fieldType = Int
+            , fieldVal = Just
+                ( Literal ( IntLiteral 0 ) )
+            }
+        ]
+    , methods =
+        [ Method
+            { methodName = "increment"
+            , returnType = Int
+            , params =
+                [ Param
+                    { paramName = "x"
+                    , paramType = Int
+                    }
+                ]
+            , statements =
+                [ AssignStmt ( VarUse "a" )
+                    ( OperatorExp
+                        ( BinaryExp
+                            { binaryOp = Addition
+                            , left = VarUse "a"
+                            , right = Literal ( IntLiteral 10 )
+                            }
+                        )
+                    )
+                , ReturnStmt ( VarUse "a" )
+                ]
+            }
+        , Method
+            { methodName = "decrement"
+            , returnType = Int
+            , params = []
+            , statements =
+                [ NotImplemented "VarDeclStmt"
+                , AssignStmt ( VarUse "a" )
+                    ( OperatorExp
+                        ( BinaryExp
+                            { binaryOp = Subtraction
+                            , left = VarUse "a"
+                            , right = Missing "VarUse"
+                            }
+                        )
+                    )
+                , ReturnStmt ( VarUse "a" )
+                ]
+            }
+        , Method
+            { methodName = "val"
+            , returnType = Unit
+            , params = []
+            , statements = [ NotImplemented "FnApp" ]
+            }
+        ]
+    }

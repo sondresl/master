@@ -1,0 +1,69 @@
+{ "ModuleDecl":
+    { "ModuleName": "IntSample"
+    , "Declarations": 
+        [ { "ClassName": "Bools"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "add"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value": 
+                            { "Operator": "AddAddExp"
+                            , "Left": 
+                                { "FieldName": "a" }
+                            , "Right": 
+                                { "IntLiteral": 1 }
+                            }
+                          }
+                      }
+                    ]
+              }
+            , { "MethodName": "sub"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ { "ParamName": "b"
+                  , "ParamType": "Int"
+                  }
+                ]
+              , "Body":
+                    [ { "VarDeclStmt":
+                        { "VarName": "c"
+                        , "Type": "Int"
+                        , "InitExp": { "Operator": "AddAddExp"
+                        , "Left": 
+                            { "FieldName": "a" }
+                        , "Right": 
+                            { "VarName": "b" }
+                        }
+                        
+                        }
+                      }
+                    , { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value": 
+                            { "Operator": "AddAddExp"
+                            , "Left": 
+                                { "VarName": "c" }
+                            , "Right": 
+                                { "VarName": "b" }
+                            }
+                          }
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

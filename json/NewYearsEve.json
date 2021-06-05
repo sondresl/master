@@ -1,0 +1,1063 @@
+{ "ModuleDecl":
+    { "ModuleName": "Example"
+    , "Declarations": 
+        [ { "InterfaceDecl":
+            { "Name": "Balancer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "requestdc"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "comp"
+                          , "ParamType": "DC"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "setPartner"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "p"
+                          , "ParamType": "Balancer"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "TelephoneServer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "call"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "calltime"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "SMSServer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "sendSMS"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "TelephoneServer"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "callcount"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "call"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "calltime"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "WhileStmt":
+                            { "Condition": 
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "VarName": "calltime" }
+                                , "Right": 
+                                    { "IntLiteral": 0 }
+                                }
+                            , "Body": 
+                                    [ { "AssignStatement":
+                                        { "Variable": { "VarName": "calltime" }
+                                        , "Value": 
+                                            { "Operator": "SubAddExp"
+                                            , "Left": 
+                                                { "VarName": "calltime" }
+                                            , "Right": 
+                                                { "IntLiteral": 1 }
+                                            }
+                                         }
+                                      }
+                                    , { "AwaitStmt": 
+                                        { "DurationGuard":
+                                            { "Min": { "IntLiteral": 1 }
+                                            , "Max": { "IntLiteral": 1 }
+                                            }
+                                        }
+                                    }
+                                    ]
+                            }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "callcount" }
+                            , "Value": 
+                                { "Operator": "AddAddExp"
+                                , "Left": 
+                                    { "FieldName": "callcount" }
+                                , "Right": 
+                                    { "IntLiteral": 1 }
+                                }
+                             }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "SMSServer"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "smscount"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "sendSMS"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "smscount" }
+                            , "Value": 
+                                { "Operator": "AddAddExp"
+                                , "Left": 
+                                    { "FieldName": "smscount" }
+                                , "Right": 
+                                    { "IntLiteral": 1 }
+                                }
+                             }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "Handset"
+          , "Parameters":
+            [ { "ParamName": "interval"
+              , "ParamType": "Int"  }
+            , { "ParamName": "cyclelength"
+              , "ParamType": "Int"  }
+            , { "ParamName": "ts"
+              , "ParamType": "TelephoneServer"  }
+            , { "ParamName": "smss"
+              , "ParamType": "SMSServer"  }
+            ]
+          , "Fields":
+            [ { "Type": "Bool"
+              , "FieldName": "call"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            , { "Type": "Rat"
+              , "FieldName": "curr"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "normalBehavior"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "curr" }
+                            , "Value": 
+                                { "Operator": "ModMultExp"
+                                , "Left": 
+                                    { "FnApp":
+                                        { "FnName": "timeValue"
+                                        , "FnArgs": 
+                                            [ { "FnApp":
+                                                { "FnName": "now"
+                                                , "FnArgs": 
+                                                    [ ]
+                                                }
+                                              }
+                                            ]
+                                        }
+                                      }
+                                    
+                                , "Right": 
+                                    { "FieldName": "interval" }
+                                }
+                             }
+                          }
+                        , { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "AndBoolExp"
+                                , "Left": 
+                                    { "Operator": "GTExp"
+                                    , "Left": 
+                                        { "FieldName": "curr" }
+                                    , "Right": 
+                                        { "IntLiteral": 50 }
+                                    }
+                                    
+                                , "Right": 
+                                    { "Operator": "LTExp"
+                                    , "Left": 
+                                        { "FieldName": "curr" }
+                                    , "Right": 
+                                        { "IntLiteral": 70 }
+                                    }
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "midnightWindow"
+                                            , "Params": 
+                                                [ ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            , "Else": 
+                                    [ { "IfStmt":
+                                        { "Condition": 
+                                            { "FieldName": "call" }
+                                        , "Then": 
+                                                [ { "VarDeclStmt":
+                                                    { "VarName": "tmp521985523"
+                                                    , "Type": "Fut"
+                                                    , "InitExp":  { "AsyncCall": 
+                                                        { "Callee": { "FieldName": "ts" }
+                                                        , "Method": "call"
+                                                        , "Params": 
+                                                            [ { "IntLiteral": 1 }]
+                                                        }
+                                                    }
+                                                    
+                                                    }
+                                                  }
+                                                , { "AwaitStmt": 
+                                                    { "ClaimGuard": 
+                                                        { "VarName": "tmp521985523" }}
+                                                }
+                                                ]
+                                        
+                                        , "Else": 
+                                                [ { "ExprStmt": 
+                                                     { "AsyncCall": 
+                                                        { "Callee": { "FieldName": "smss" }
+                                                        , "Method": "sendSMS"
+                                                        , "Params": 
+                                                            [ ]
+                                                        }
+                                                    }
+                                                    
+                                                  }
+                                                ]
+                                        }
+                                      }
+                                    , { "AssignStatement":
+                                        { "Variable": { "FieldName": "call" }
+                                        , "Value": 
+                                            { "Operator": "NegExp"
+                                            , "Value": { "FieldName": "call" }
+                                            }
+                                         }
+                                      }
+                                    , { "AwaitStmt": 
+                                        { "DurationGuard":
+                                            { "Min": { "FieldName": "cyclelength" }
+                                            , "Max": { "FieldName": "cyclelength" }
+                                            }
+                                        }
+                                    }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "normalBehavior"
+                                            , "Params": 
+                                                [ ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "midnightWindow"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "curr" }
+                            , "Value": 
+                                { "Operator": "ModMultExp"
+                                , "Left": 
+                                    { "FnApp":
+                                        { "FnName": "timeValue"
+                                        , "FnArgs": 
+                                            [ { "FnApp":
+                                                { "FnName": "now"
+                                                , "FnArgs": 
+                                                    [ ]
+                                                }
+                                              }
+                                            ]
+                                        }
+                                      }
+                                    
+                                , "Right": 
+                                    { "FieldName": "interval" }
+                                }
+                             }
+                          }
+                        , { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "OrBoolExp"
+                                , "Left": 
+                                    { "Operator": "LTEQExp"
+                                    , "Left": 
+                                        { "FieldName": "curr" }
+                                    , "Right": 
+                                        { "IntLiteral": 50 }
+                                    }
+                                    
+                                , "Right": 
+                                    { "Operator": "GTEQExp"
+                                    , "Left": 
+                                        { "FieldName": "curr" }
+                                    , "Right": 
+                                        { "IntLiteral": 70 }
+                                    }
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "normalBehavior"
+                                            , "Params": 
+                                                [ ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            , "Else": 
+                                    [ { "VarDeclStmt":
+                                        { "VarName": "i"
+                                        , "Type": "Int"
+                                        , "InitExp": { "IntLiteral": 0 }
+                                        }
+                                      }
+                                    , { "WhileStmt":
+                                        { "Condition": 
+                                            { "Operator": "LTExp"
+                                            , "Left": 
+                                                { "VarName": "i" }
+                                            , "Right": 
+                                                { "IntLiteral": 10 }
+                                            }
+                                        , "Body": 
+                                                [ { "ExprStmt": 
+                                                     { "AsyncCall": 
+                                                        { "Callee": { "FieldName": "smss" }
+                                                        , "Method": "sendSMS"
+                                                        , "Params": 
+                                                            [ ]
+                                                        }
+                                                    }
+                                                    
+                                                  }
+                                                , { "AssignStatement":
+                                                    { "Variable": { "VarName": "i" }
+                                                    , "Value": 
+                                                        { "Operator": "AddAddExp"
+                                                        , "Left": 
+                                                            { "VarName": "i" }
+                                                        , "Right": 
+                                                            { "IntLiteral": 1 }
+                                                        }
+                                                     }
+                                                  }
+                                                ]
+                                        }
+                                      }
+                                    , { "AwaitStmt": 
+                                        { "DurationGuard":
+                                            { "Min": { "IntLiteral": 1 }
+                                            , "Max": { "IntLiteral": 1 }
+                                            }
+                                        }
+                                    }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "midnightWindow"
+                                            , "Params": 
+                                                [ ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "run"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": "ThisExp"
+                                
+                                , "Method": "normalBehavior"
+                                , "Params": 
+                                    [ ]
+                                }
+                            }
+                            
+                          }
+                        , { "ExprStmt": 
+                            { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "Operator": "AddAddExp"
+                                        , "Left": 
+                                            { "StringLiteral": "[Time: " }
+                                        , "Right": 
+                                            { "FnApp":
+                                                { "FnName": "toString"
+                                                , "FnArgs": 
+                                                    [ { "FnApp":
+                                                        { "FnName": "timeValue"
+                                                        , "FnArgs": 
+                                                            [ { "FnApp":
+                                                                { "FnName": "now"
+                                                                , "FnArgs": 
+                                                                    [ ]
+                                                                }
+                                                              }
+                                                            ]
+                                                        }
+                                                      }
+                                                    ]
+                                                }
+                                              }
+                                            
+                                        }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": "] Running handset" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "Balancer"
+          , "Parameters":
+            [ { "ParamName": "name"
+              , "ParamType": "String"  }
+            , { "ParamName": "minimum"
+              , "ParamType": "Rat"  }
+            ]
+          , "Fields":
+            [ { "Type": "Balancer"
+              , "FieldName": "partner"
+              , "InitExp": "NullExp"
+            
+              }
+            , { "Type": "Rat"
+              , "FieldName": "ld"
+              , "InitExp": { "IntLiteral": 100 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "run"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AwaitStmt": 
+                            { "ExpGuard":
+                                { "Operator": "NotEqExp"
+                                , "Left": 
+                                    { "FieldName": "partner" }
+                                , "Right": 
+                                    "NullExp"
+                                    
+                                }
+                            }
+                        }
+                        , { "WhileStmt":
+                            { "Condition": 
+                                { "DataConstructor": "True" }
+                            , "Body": 
+                                    [ { "AwaitStmt": 
+                                        { "DurationGuard":
+                                            { "Min": { "IntLiteral": 1 }
+                                            , "Max": { "IntLiteral": 1 }
+                                            }
+                                        }
+                                    }
+                                    , { "VarDeclStmt":
+                                        { "VarName": "tmp579590740"
+                                        , "Type": "Fut"
+                                        , "InitExp":  { "AsyncCall": 
+                                            { "Callee": { "FnApp":
+                                                { "FnName": "thisDC"
+                                                , "FnArgs": 
+                                                    [ ]
+                                                }
+                                              }
+                                            
+                                            , "Method": "load"
+                                            , "Params": 
+                                                [ { "DataConstructor": "Speed" }
+                                                , { "IntLiteral": 1 }]
+                                            }
+                                        }
+                                        
+                                        }
+                                      }
+                                    , { "AwaitStmt": 
+                                        { "ClaimGuard": 
+                                            { "VarName": "tmp579590740" }}
+                                    }
+                                    , { "AssignStatement":
+                                        { "Variable": { "FieldName": "ld" }
+                                        , "Value": 
+                                            { "GetExp":
+                                                { "VarName": "tmp579590740" }}
+                                         }
+                                      }
+                                    , { "ExprStmt": 
+                                        { "FnApp":
+                                            { "FnName": "println"
+                                            , "FnArgs": 
+                                                [ { "Operator": "AddAddExp"
+                                                , "Left": 
+                                                    { "Operator": "AddAddExp"
+                                                    , "Left": 
+                                                        { "Operator": "AddAddExp"
+                                                        , "Left": 
+                                                            { "Operator": "AddAddExp"
+                                                            , "Left": 
+                                                                { "Operator": "AddAddExp"
+                                                                , "Left": 
+                                                                    { "Operator": "AddAddExp"
+                                                                    , "Left": 
+                                                                        { "StringLiteral": "[Time: " }
+                                                                    , "Right": 
+                                                                        { "FnApp":
+                                                                            { "FnName": "toString"
+                                                                            , "FnArgs": 
+                                                                                [ { "FnApp":
+                                                                                    { "FnName": "timeValue"
+                                                                                    , "FnArgs": 
+                                                                                        [ { "FnApp":
+                                                                                            { "FnName": "now"
+                                                                                            , "FnArgs": 
+                                                                                                [ ]
+                                                                                            }
+                                                                                          }
+                                                                                        ]
+                                                                                    }
+                                                                                  }
+                                                                                ]
+                                                                            }
+                                                                          }
+                                                                        
+                                                                    }
+                                                                    
+                                                                , "Right": 
+                                                                    { "StringLiteral": "] Balancer " }
+                                                                }
+                                                                
+                                                            , "Right": 
+                                                                { "FieldName": "name" }
+                                                            }
+                                                            
+                                                        , "Right": 
+                                                            { "StringLiteral": " has current load " }
+                                                        }
+                                                        
+                                                    , "Right": 
+                                                        { "FnApp":
+                                                            { "FnName": "toString"
+                                                            , "FnArgs": 
+                                                                [ { "FieldName": "ld" }]
+                                                            }
+                                                          }
+                                                        
+                                                    }
+                                                    
+                                                , "Right": 
+                                                    { "StringLiteral": "%" }
+                                                }
+                                                ]
+                                            }
+                                          }
+                                        
+                                      }
+                                    , { "IfStmt":
+                                        { "Condition": 
+                                            { "Operator": "GTExp"
+                                            , "Left": 
+                                                { "FieldName": "ld" }
+                                            , "Right": 
+                                                { "IntLiteral": 90 }
+                                            }
+                                        
+                                        , "Then": 
+                                                [ { "ExprStmt": 
+                                                    { "FnApp":
+                                                        { "FnName": "println"
+                                                        , "FnArgs": 
+                                                            [ { "Operator": "AddAddExp"
+                                                            , "Left": 
+                                                                { "Operator": "AddAddExp"
+                                                                , "Left": 
+                                                                    { "Operator": "AddAddExp"
+                                                                    , "Left": 
+                                                                        { "Operator": "AddAddExp"
+                                                                        , "Left": 
+                                                                            { "StringLiteral": "[Time: " }
+                                                                        , "Right": 
+                                                                            { "FnApp":
+                                                                                { "FnName": "toString"
+                                                                                , "FnArgs": 
+                                                                                    [ { "FnApp":
+                                                                                        { "FnName": "timeValue"
+                                                                                        , "FnArgs": 
+                                                                                            [ { "FnApp":
+                                                                                                { "FnName": "now"
+                                                                                                , "FnArgs": 
+                                                                                                    [ ]
+                                                                                                }
+                                                                                              }
+                                                                                            ]
+                                                                                        }
+                                                                                      }
+                                                                                    ]
+                                                                                }
+                                                                              }
+                                                                            
+                                                                        }
+                                                                        
+                                                                    , "Right": 
+                                                                        { "StringLiteral": "] Balancer " }
+                                                                    }
+                                                                    
+                                                                , "Right": 
+                                                                    { "FieldName": "name" }
+                                                                }
+                                                                
+                                                            , "Right": 
+                                                                { "StringLiteral": " needs more resources!" }
+                                                            }
+                                                            ]
+                                                        }
+                                                      }
+                                                    
+                                                  }
+                                                , { "VarDeclStmt":
+                                                    { "VarName": "tmp1974918491"
+                                                    , "Type": "Fut"
+                                                    , "InitExp":  { "AsyncCall": 
+                                                        { "Callee": { "FieldName": "partner" }
+                                                        , "Method": "requestdc"
+                                                        , "Params": 
+                                                            [ { "FnApp":
+                                                                { "FnName": "thisDC"
+                                                                , "FnArgs": 
+                                                                    [ ]
+                                                                }
+                                                              }
+                                                            ]
+                                                        }
+                                                    }
+                                                    
+                                                    }
+                                                  }
+                                                , { "AwaitStmt": 
+                                                    { "ClaimGuard": 
+                                                        { "VarName": "tmp1974918491" }}
+                                                }
+                                                ]
+                                        
+                                        }
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "requestdc"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "comp"
+                          , "ParamType": "DC"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "tmp188647125"
+                            , "Type": "Fut"
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "FnApp":
+                                    { "FnName": "thisDC"
+                                    , "FnArgs": 
+                                        [ ]
+                                    }
+                                  }
+                                
+                                , "Method": "total"
+                                , "Params": 
+                                    [ { "DataConstructor": "Speed" }
+                                    ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "AwaitStmt": 
+                            { "ClaimGuard": 
+                                { "VarName": "tmp188647125" }}
+                        }
+                        , { "VarDeclStmt":
+                            { "VarName": "total"
+                            , "Type": "InfRat"
+                            , "InitExp": { "GetExp":
+                                { "VarName": "tmp188647125" }}
+                            
+                            }
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "tmp1924411652"
+                            , "Type": "Fut"
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "FnApp":
+                                    { "FnName": "thisDC"
+                                    , "FnArgs": 
+                                        [ ]
+                                    }
+                                  }
+                                
+                                , "Method": "load"
+                                , "Params": 
+                                    [ { "DataConstructor": "Speed" }
+                                    , { "IntLiteral": 1 }]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "AwaitStmt": 
+                            { "ClaimGuard": 
+                                { "VarName": "tmp1924411652" }}
+                        }
+                        , { "VarDeclStmt":
+                            { "VarName": "ld"
+                            , "Type": "Rat"
+                            , "InitExp": { "GetExp":
+                                { "VarName": "tmp1924411652" }}
+                            
+                            }
+                          }
+                        , { "VarDeclStmt":
+                            { "VarName": "requested"
+                            , "Type": "Rat"
+                            , "InitExp": { "Operator": "DivMultExp"
+                            , "Left": 
+                                { "FnApp":
+                                    { "FnName": "finvalue"
+                                    , "FnArgs": 
+                                        [ { "VarName": "total" }]
+                                    }
+                                  }
+                                
+                            , "Right": 
+                                { "IntLiteral": 3 }
+                            }
+                            
+                            }
+                          }
+                        , { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "AndBoolExp"
+                                , "Left": 
+                                    { "Operator": "LTExp"
+                                    , "Left": 
+                                        { "VarName": "ld" }
+                                    , "Right": 
+                                        { "IntLiteral": 50 }
+                                    }
+                                    
+                                , "Right": 
+                                    { "Operator": "GTExp"
+                                    , "Left": 
+                                        { "Operator": "SubAddExp"
+                                        , "Left": 
+                                            { "FnApp":
+                                                { "FnName": "finvalue"
+                                                , "FnArgs": 
+                                                    [ { "VarName": "total" }]
+                                                }
+                                              }
+                                            
+                                        , "Right": 
+                                            { "VarName": "requested" }
+                                        }
+                                        
+                                    , "Right": 
+                                        { "FieldName": "minimum" }
+                                    }
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": { "FnApp":
+                                                { "FnName": "thisDC"
+                                                , "FnArgs": 
+                                                    [ ]
+                                                }
+                                              }
+                                            
+                                            , "Method": "transfer"
+                                            , "Params": 
+                                                [ { "VarName": "comp" }, { "VarName": "requested" }, { "DataConstructor": "Speed" }
+                                                ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            , "Else": 
+                                    [ { "ExprStmt": 
+                                        { "FnApp":
+                                            { "FnName": "println"
+                                            , "FnArgs": 
+                                                [ { "Operator": "AddAddExp"
+                                                , "Left": 
+                                                    { "Operator": "AddAddExp"
+                                                    , "Left": 
+                                                        { "Operator": "AddAddExp"
+                                                        , "Left": 
+                                                            { "Operator": "AddAddExp"
+                                                            , "Left": 
+                                                                { "StringLiteral": "[Time: " }
+                                                            , "Right": 
+                                                                { "FnApp":
+                                                                    { "FnName": "toString"
+                                                                    , "FnArgs": 
+                                                                        [ { "FnApp":
+                                                                            { "FnName": "timeValue"
+                                                                            , "FnArgs": 
+                                                                                [ { "FnApp":
+                                                                                    { "FnName": "now"
+                                                                                    , "FnArgs": 
+                                                                                        [ ]
+                                                                                    }
+                                                                                  }
+                                                                                ]
+                                                                            }
+                                                                          }
+                                                                        ]
+                                                                    }
+                                                                  }
+                                                                
+                                                            }
+                                                            
+                                                        , "Right": 
+                                                            { "StringLiteral": "] Balancer " }
+                                                        }
+                                                        
+                                                    , "Right": 
+                                                        { "FieldName": "name" }
+                                                    }
+                                                    
+                                                , "Right": 
+                                                    { "StringLiteral": " No resources available!!" }
+                                                }
+                                                ]
+                                            }
+                                          }
+                                        
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "setPartner"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "p"
+                          , "ParamType": "Balancer"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "ExprStmt": 
+                            { "FnApp":
+                                { "FnName": "println"
+                                , "FnArgs": 
+                                    [ { "Operator": "AddAddExp"
+                                    , "Left": 
+                                        { "Operator": "AddAddExp"
+                                        , "Left": 
+                                            { "Operator": "AddAddExp"
+                                            , "Left": 
+                                                { "Operator": "AddAddExp"
+                                                , "Left": 
+                                                    { "StringLiteral": "[Time: " }
+                                                , "Right": 
+                                                    { "FnApp":
+                                                        { "FnName": "toString"
+                                                        , "FnArgs": 
+                                                            [ { "FnApp":
+                                                                { "FnName": "timeValue"
+                                                                , "FnArgs": 
+                                                                    [ { "FnApp":
+                                                                        { "FnName": "now"
+                                                                        , "FnArgs": 
+                                                                            [ ]
+                                                                        }
+                                                                      }
+                                                                    ]
+                                                                }
+                                                              }
+                                                            ]
+                                                        }
+                                                      }
+                                                    
+                                                }
+                                                
+                                            , "Right": 
+                                                { "StringLiteral": "] " }
+                                            }
+                                            
+                                        , "Right": 
+                                            { "FieldName": "name" }
+                                        }
+                                        
+                                    , "Right": 
+                                        { "StringLiteral": " received partner" }
+                                    }
+                                    ]
+                                }
+                              }
+                            
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "partner" }
+                            , "Value": 
+                                { "VarName": "p" } }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}

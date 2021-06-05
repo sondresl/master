@@ -1,0 +1,22 @@
+{ "MethodName": "increment"
+  , "ReturnType": "Int"
+  , "Params":
+    [ { "ParamName": "x"
+      , "ParamType": "Int"
+      }
+    ]
+  , "Body":
+        [ { "AssignStatement":
+            { "Variable": { "FieldName": "a" }
+            , "Value":
+                { "BinaryOp": "AddAddExp"
+                , "Left": { "FieldName": "a" }
+                , "Right": { "IntLiteral": 10 }
+                }
+              }
+          }
+        , { "ReturnStmt":
+            { "FieldName": "a" }
+          }
+        ]
+}

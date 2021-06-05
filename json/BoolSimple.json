@@ -1,0 +1,38 @@
+{ "ModuleDecl":
+    { "ModuleName": "BoolSam"
+    , "Declarations": 
+        [ { "ClassName": "Bools"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Bool"
+              , "FieldName": "a"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "setA"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "ExprStmt": 
+                        { "Operator": "OrBoolExp"
+                        , "Left": 
+                            { "FieldName": "a" }
+                        , "Right": 
+                            { "Operator": "NegExp"
+                            , "Value": { "FieldName": "a" }
+                            }
+                            
+                        }
+                        
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

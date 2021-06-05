@@ -1,0 +1,20 @@
+{ "MethodName": "decrement"
+, "ReturnType": "Int"
+, "Params": [ ]
+, "Body":
+   [ { "NotSupported": "VarDeclStmt" }
+   , { "AssignStatement":
+       { "Variable": { "FieldName": "a" }
+       , "Value":
+           { "Operator": "SubAddExp"
+           , "Left": { "FieldName": "a" }
+           , "Right": { "NotSupported": "VarUse" }
+
+           }
+       }
+   }
+   , { "ReturnStmt":
+       { "FieldName": "a" }
+   }
+   ]
+}

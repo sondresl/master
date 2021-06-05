@@ -1,0 +1,109 @@
+{ "ModuleDecl":
+    { "ModuleName": "Sample"
+    , "Declarations":
+        [ { "NotSupported": "InterfaceDecl" }
+        , { "NotSupported": "ParametricDataTypeDecl" }
+        , { "NotSupported": "FunctionDecl" }
+        , { "ClassName": "CountImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            , { "Type": "String"
+              , "FieldName": "s"
+              , "InitExp": { "NotSupported": "StringLiteral" }
+
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "increment"
+              , "ReturnType": "Int"
+              , "Params":
+                [ { "ParamName": "x"
+                  , "ParamType": "Int"
+                  }
+                ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value":
+                            { "FnApp":
+                                { "FnName": "add"
+                                , "FnArgs":
+                                    [ { "FieldName": "a" }, { "IntLiteral": 10 }]
+                                }
+                              }
+                          }
+                      }
+                    , { "ReturnStmt":
+                        { "FieldName": "a" }
+                      }
+                    ]
+              }
+            , { "MethodName": "decrement"
+              , "ReturnType": "Int"
+              , "Params":
+                [ ]
+              , "Body":
+                    [ { "VarDeclStmt":
+                        { "VarName": "b"
+                        , "Type": "Int"
+                        , "InitExp": { "IntLiteral": 1 }
+                        }
+                      }
+                    , { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value":
+                            { "Operator": "SubAddExp"
+                            , "Left": { "FieldName": "a" }
+                            , "Right": { "VarName": "b" }
+                            }
+                          }
+                      }
+                    , { "ReturnStmt":
+                        { "FieldName": "a" }
+                      }
+                    ]
+              }
+            , { "MethodName": "val"
+              , "ReturnType": "Unit"
+              , "Params":
+                [ ]
+              , "Body":
+                    [ { "ExprStmt":
+                        { "FnApp":
+                            { "FnName": "println"
+                            , "FnArgs":
+                                [ { "FnApp":
+                                    { "FnName": "toString"
+                                    , "FnArgs":
+                                        [ { "FieldName": "a" }]
+                                    }
+                                  }
+                                ]
+                            }
+                          }
+
+                      }
+                    ]
+              }
+            , { "MethodName": "asPerson"
+              , "ReturnType": "Person"
+              , "Params":
+                [ ]
+              , "Body":
+                    [ { "ReturnStmt":
+                        { "DataConstructor": "Person" }
+
+                      }
+                    ]
+              }
+            ]
+          }
+        , { "NotSupported": "ParametricFunctionDecl" }
+        ]
+    }
+}

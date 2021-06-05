@@ -1,0 +1,66 @@
+{ "ModuleDecl":
+    { "ModuleName": "WhileSimple"
+    , "Declarations": 
+        [ { "ClassName": "WhileSimple"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            , { "Type": "Bool"
+              , "FieldName": "b"
+              , "InitExp": { "DataConstructor": "False" }
+            
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "add"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "WhileStmt":
+                        { "Condition": 
+                            { "Operator": "LTExp"
+                            , "Left": 
+                                { "FieldName": "a" }
+                            , "Right": 
+                                { "IntLiteral": 5 }
+                            }
+                        , "Body": 
+                                [ { "AssignStatement":
+                                    { "Variable": { "FieldName": "a" }
+                                    , "Value": 
+                                        { "Operator": "AddAddExp"
+                                        , "Left": 
+                                            { "FieldName": "a" }
+                                        , "Right": 
+                                            { "IntLiteral": 1 }
+                                        }
+                                      }
+                                  }
+                                ]
+                        }
+                      }
+                    ]
+              }
+            , { "MethodName": "setB"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "b" }
+                        , "Value": 
+                            { "DataConstructor": "True" }
+                          }
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

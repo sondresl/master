@@ -1,0 +1,13 @@
+.stack-work/
+*~
+
+testSMT/
+test/
+
+Thoughts/
+abstools/
+dist-newstyle/
+
+absexamples/
+*output*
+not_commute.md

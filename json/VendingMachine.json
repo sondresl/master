@@ -1,0 +1,461 @@
+{
+   "ModuleDecl" : {
+      "ModuleName" : "VendingMachine",
+      "Declarations" : [
+         {
+            "InterfaceDecl" : {
+               "Methods" : [
+                  {
+                     "MethodSig" : {
+                        "Params" : [],
+                        "Name" : "insertCoin",
+                        "ReturnType" : "Unit"
+                     }
+                  },
+                  {
+                     "MethodSig" : {
+                        "Name" : "insertCoins",
+                        "Params" : [
+                           {
+                              "ParamName" : "nCoins",
+                              "ParamType" : "Int"
+                           }
+                        ],
+                        "ReturnType" : "Unit"
+                     }
+                  },
+                  {
+                     "MethodSig" : {
+                        "ReturnType" : "Int",
+                        "Name" : "retrieveCoins",
+                        "Params" : []
+                     }
+                  }
+               ],
+               "Extends" : [
+                  "ABS.StdLib.Object"
+               ],
+               "Name" : "VendingMachine"
+            }
+         },
+         {
+            "InterfaceDecl" : {
+               "Name" : "PrettyPrinter",
+               "Extends" : [
+                  "ABS.StdLib.Object"
+               ],
+               "Methods" : [
+                  {
+                     "MethodSig" : {
+                        "Name" : "showIncome",
+                        "Params" : [
+                           {
+                              "ParamName" : "nCoins",
+                              "ParamType" : "Int"
+                           }
+                        ],
+                        "ReturnType" : "Unit"
+                     }
+                  },
+                  {
+                     "MethodSig" : {
+                        "ReturnType" : "Unit",
+                        "Params" : [],
+                        "Name" : "showCoin"
+                     }
+                  }
+               ]
+            }
+         },
+         {
+            "InterfaceDecl" : {
+               "Methods" : [
+                  {
+                     "MethodSig" : {
+                        "Params" : [
+                           {
+                              "ParamName" : "n",
+                              "ParamType" : "Int"
+                           }
+                        ],
+                        "Name" : "main",
+                        "ReturnType" : "Unit"
+                     }
+                  }
+               ],
+               "Extends" : [
+                  "ABS.StdLib.Object"
+               ],
+               "Name" : "Main"
+            }
+         },
+         {
+            "Methods" : [
+               {
+                  "MethodImpl" : {
+                     "Body" : [
+                        {
+                           "AssignStatement" : {
+                              "Variable" : {
+                                 "FieldName" : "coins"
+                              },
+                              "Value" : {
+                                 "Right" : {
+                                    "IntLiteral" : 1
+                                 },
+                                 "Left" : {
+                                    "FieldName" : "coins"
+                                 },
+                                 "Operator" : "AddAddExp"
+                              }
+                           }
+                        }
+                     ],
+                     "Signature" : {
+                        "MethodSig" : {
+                           "ReturnType" : "Unit",
+                           "Name" : "insertCoin",
+                           "Params" : []
+                        }
+                     }
+                  }
+               },
+               {
+                  "MethodImpl" : {
+                     "Signature" : {
+                        "MethodSig" : {
+                           "Name" : "insertCoins",
+                           "Params" : [
+                              {
+                                 "ParamName" : "nCoins",
+                                 "ParamType" : "Int"
+                              }
+                           ],
+                           "ReturnType" : "Unit"
+                        }
+                     },
+                     "Body" : [
+                        {
+                           "WhileStmt" : {
+                              "Body" : [
+                                 {
+                                    "AssignStatement" : {
+                                       "Variable" : {
+                                          "VarName" : "nCoins"
+                                       },
+                                       "Value" : {
+                                          "Left" : {
+                                             "VarName" : "nCoins"
+                                          },
+                                          "Right" : {
+                                             "IntLiteral" : 1
+                                          },
+                                          "Operator" : "SubAddExp"
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "VarDeclStmt" : {
+                                       "InitExp" : {
+                                          "AsyncCall" : {
+                                             "Method" : "insertCoin",
+                                             "Params" : [],
+                                             "Callee" : "ThisExp"
+                                          }
+                                       },
+                                       "Type" : "Fut",
+                                       "VarName" : "f"
+                                    }
+                                 },
+                                 {
+                                    "AwaitStmt" : {
+                                       "ClaimGuard" : {
+                                          "VarName" : "f"
+                                       }
+                                    }
+                                 }
+                              ],
+                              "Condition" : {
+                                 "Operator" : "GTExp",
+                                 "Right" : {
+                                    "IntLiteral" : 0
+                                 },
+                                 "Left" : {
+                                    "VarName" : "nCoins"
+                                 }
+                              }
+                           }
+                        }
+                     ]
+                  }
+               },
+               {
+                  "MethodImpl" : {
+                     "Signature" : {
+                        "MethodSig" : {
+                           "Name" : "retrieveCoins",
+                           "Params" : [],
+                           "ReturnType" : "Int"
+                        }
+                     },
+                     "Body" : [
+                        {
+                           "VarDeclStmt" : {
+                              "VarName" : "total",
+                              "Type" : "Int",
+                              "InitExp" : {
+                                 "IntLiteral" : 0
+                              }
+                           }
+                        },
+                        {
+                           "WhileStmt" : {
+                              "Body" : [
+                                 {
+                                    "AssignStatement" : {
+                                       "Value" : {
+                                          "Operator" : "SubAddExp",
+                                          "Left" : {
+                                             "FieldName" : "coins"
+                                          },
+                                          "Right" : {
+                                             "IntLiteral" : 1
+                                          }
+                                       },
+                                       "Variable" : {
+                                          "FieldName" : "coins"
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "VarDeclStmt" : {
+                                       "InitExp" : {
+                                          "AsyncCall" : {
+                                             "Params" : [],
+                                             "Callee" : {
+                                                "FieldName" : "out"
+                                             },
+                                             "Method" : "showCoin"
+                                          }
+                                       },
+                                       "VarName" : "f",
+                                       "Type" : "Fut"
+                                    }
+                                 },
+                                 {
+                                    "AwaitStmt" : {
+                                       "ClaimGuard" : {
+                                          "VarName" : "f"
+                                       }
+                                    }
+                                 },
+                                 {
+                                    "AssignStatement" : {
+                                       "Variable" : {
+                                          "VarName" : "total"
+                                       },
+                                       "Value" : {
+                                          "Operator" : "AddAddExp",
+                                          "Right" : {
+                                             "IntLiteral" : 1
+                                          },
+                                          "Left" : {
+                                             "VarName" : "total"
+                                          }
+                                       }
+                                    }
+                                 }
+                              ],
+                              "Condition" : {
+                                 "Operator" : "GTExp",
+                                 "Right" : {
+                                    "IntLiteral" : 0
+                                 },
+                                 "Left" : {
+                                    "FieldName" : "coins"
+                                 }
+                              }
+                           }
+                        },
+                        {
+                           "ReturnStmt" : {
+                              "VarName" : "total"
+                           }
+                        }
+                     ]
+                  }
+               }
+            ],
+            "Parameters" : [
+               {
+                  "ParamType" : "Int",
+                  "ParamName" : "coins"
+               },
+               {
+                  "ParamName" : "out",
+                  "ParamType" : "PrettyPrinter"
+               }
+            ],
+            "ClassName" : "IVendingMachine",
+            "Fields" : []
+         },
+         {
+            "Methods" : [
+               {
+                  "MethodImpl" : {
+                     "Body" : [],
+                     "Signature" : {
+                        "MethodSig" : {
+                           "ReturnType" : "Unit",
+                           "Params" : [
+                              {
+                                 "ParamName" : "nCoins",
+                                 "ParamType" : "Int"
+                              }
+                           ],
+                           "Name" : "showIncome"
+                        }
+                     }
+                  }
+               },
+               {
+                  "MethodImpl" : {
+                     "Signature" : {
+                        "MethodSig" : {
+                           "ReturnType" : "Unit",
+                           "Params" : [],
+                           "Name" : "showCoin"
+                        }
+                     },
+                     "Body" : []
+                  }
+               }
+            ],
+            "Parameters" : [],
+            "ClassName" : "IPrettyPrinter",
+            "Fields" : []
+         },
+         {
+            "ClassName" : "IMain",
+            "Fields" : [],
+            "Parameters" : [],
+            "Methods" : [
+               {
+                  "MethodImpl" : {
+                     "Body" : [
+                        {
+                           "VarDeclStmt" : {
+                              "InitExp" : {
+                                 "NewExp" : {
+                                    "ClassName" : "IPrettyPrinter",
+                                    "IsLocal" : true,
+                                    "Params" : []
+                                 }
+                              },
+                              "Type" : "PrettyPrinter",
+                              "VarName" : "o"
+                           }
+                        },
+                        {
+                           "VarDeclStmt" : {
+                              "VarName" : "v",
+                              "Type" : "VendingMachine",
+                              "InitExp" : {
+                                 "NewExp" : {
+                                    "Params" : [
+                                       {
+                                          "IntLiteral" : 0
+                                       },
+                                       {
+                                          "VarName" : "o"
+                                       }
+                                    ],
+                                    "ClassName" : "IVendingMachine",
+                                    "IsLocal" : true
+                                 }
+                              }
+                           }
+                        },
+                        {
+                           "ExprStmt" : {
+                              "AsyncCall" : {
+                                 "Callee" : {
+                                    "VarName" : "v"
+                                 },
+                                 "Params" : [
+                                    {
+                                       "VarName" : "n"
+                                    }
+                                 ],
+                                 "Method" : "insertCoins"
+                              }
+                           }
+                        },
+                        {
+                           "VarDeclStmt" : {
+                              "Type" : "Fut",
+                              "VarName" : "f",
+                              "InitExp" : {
+                                 "AsyncCall" : {
+                                    "Params" : [],
+                                    "Callee" : {
+                                       "VarName" : "v"
+                                    },
+                                    "Method" : "retrieveCoins"
+                                 }
+                              }
+                           }
+                        },
+                        {
+                           "AwaitStmt" : {
+                              "ClaimGuard" : {
+                                 "VarName" : "f"
+                              }
+                           }
+                        },
+                        {
+                           "VarDeclStmt" : {
+                              "InitExp" : {
+                                 "GetExp" : {
+                                    "VarName" : "f"
+                                 }
+                              },
+                              "Type" : "Int",
+                              "VarName" : "total"
+                           }
+                        },
+                        {
+                           "ExprStmt" : {
+                              "AsyncCall" : {
+                                 "Method" : "showIncome",
+                                 "Callee" : {
+                                    "VarName" : "o"
+                                 },
+                                 "Params" : [
+                                    {
+                                       "VarName" : "total"
+                                    }
+                                 ]
+                              }
+                           }
+                        }
+                     ],
+                     "Signature" : {
+                        "MethodSig" : {
+                           "ReturnType" : "Unit",
+                           "Params" : [
+                              {
+                                 "ParamName" : "n",
+                                 "ParamType" : "Int"
+                              }
+                           ],
+                           "Name" : "main"
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      ]
+   }
+}

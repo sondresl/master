@@ -1,0 +1,465 @@
+{ "ModuleDecl":
+    { "ModuleName": "Running"
+    , "Declarations": 
+        [ { "InterfaceDecl":
+            { "Name": "MainTest"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "main"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "m"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "MainImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "main"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "n"
+                          , "ParamType": "Int"  }
+                        , { "ParamName": "m"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "y"
+                            , "Type": "ServerInterface"
+                            , "InitExp":  { "NewExp": 
+                                { "IsLocal": true
+                                , "ClassName": "Server"
+                                , "Params": 
+                                    [ "NullExp"
+                                    ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": { "VarName": "y" }
+                                , "Method": "start"
+                                , "Params": 
+                                    [ { "VarName": "n" }, { "VarName": "m" }]
+                                }
+                            }
+                            
+                          }
+                        ]
+                    }  }
+                ]
+              }
+            , { "InterfaceDecl":
+                { "Name": "ServerInterface"
+                , "Extends": 
+                [ "ABS.StdLib.Object"]
+                
+                , "Methods": 
+                    [ 
+                      { "MethodSig":
+                        { "Name": "initDAO"
+                        , "ReturnType": "Bool"
+                        , "Params": 
+                            [ ]
+                            
+                        }
+                      }
+                    , 
+                      { "MethodSig":
+                        { "Name": "start"
+                        , "ReturnType": "Unit"
+                        , "Params": 
+                            [ { "ParamName": "n"
+                              , "ParamType": "Int"  }
+                            , { "ParamName": "m"
+                              , "ParamType": "Int"  }
+                            ]
+                            
+                        }
+                      }
+                    ]
+                    
+                }
+            }
+            , { "InterfaceDecl":
+                { "Name": "HandlerInterface"
+                , "Extends": 
+                [ "ABS.StdLib.Object"]
+                
+                , "Methods": 
+                    [ 
+                      { "MethodSig":
+                        { "Name": "run2"
+                        , "ReturnType": "Unit"
+                        , "Params": 
+                            [ { "ParamName": "m"
+                              , "ParamType": "Int"  }
+                            ]
+                            
+                        }
+                      }
+                    ]
+                    
+                }
+            }
+            , { "InterfaceDecl":
+                { "Name": "DAOInterface"
+                , "Extends": 
+                [ "ABS.StdLib.Object"]
+                
+                , "Methods": 
+                    [ 
+                      { "MethodSig":
+                        { "Name": "initDB"
+                        , "ReturnType": "Bool"
+                        , "Params": 
+                            [ ]
+                            
+                        }
+                      }
+                    , 
+                      { "MethodSig":
+                        { "Name": "query"
+                        , "ReturnType": "Bool"
+                        , "Params": 
+                            [ { "ParamName": "m"
+                              , "ParamType": "Int"  }
+                            ]
+                            
+                        }
+                      }
+                    ]
+                    
+                }
+            }
+            , { "ClassName": "Server"
+              , "Parameters":
+                [ { "ParamName": "dao"
+                  , "ParamType": "DAOInterface"  }
+                ]
+              , "Fields":
+                [ ]
+              , "Methods":
+                [ { "MethodImpl":
+                    { "Signature":
+                      { "MethodSig":
+                        { "Name": "start"
+                        , "ReturnType": "Unit"
+                        , "Params": 
+                            [ { "ParamName": "n"
+                              , "ParamType": "Int"  }
+                            , { "ParamName": "m"
+                              , "ParamType": "Int"  }
+                            ]
+                            
+                        }
+                      }
+                    , "Body":
+                            [ { "VarDeclStmt":
+                                { "VarName": "b"
+                                , "Type": "Fut"
+                                , "InitExp":  { "AsyncCall": 
+                                    { "Callee": "ThisExp"
+                                    
+                                    , "Method": "initDAO"
+                                    , "Params": 
+                                        [ ]
+                                    }
+                                }
+                                
+                                }
+                              }
+                            , { "AwaitStmt": 
+                                { "ClaimGuard": 
+                                    { "VarName": "b" }}
+                            }
+                            , { "WhileStmt":
+                                { "Condition": 
+                                    { "Operator": "GTExp"
+                                    , "Left": 
+                                        { "VarName": "n" }
+                                    , "Right": 
+                                        { "IntLiteral": 0 }
+                                    }
+                                , "Body": 
+                                        [ { "VarDeclStmt":
+                                            { "VarName": "h"
+                                            , "Type": "HandlerInterface"
+                                            , "InitExp":  { "NewExp": 
+                                                { "IsLocal": true
+                                                , "ClassName": "Handler"
+                                                , "Params": 
+                                                    [ { "FieldName": "dao" }]
+                                                }
+                                            }
+                                            
+                                            }
+                                          }
+                                        , { "ExprStmt": 
+                                             { "AsyncCall": 
+                                                { "Callee": { "VarName": "h" }
+                                                , "Method": "run2"
+                                                , "Params": 
+                                                    [ { "VarName": "m" }]
+                                                }
+                                            }
+                                            
+                                          }
+                                        , { "AssignStatement":
+                                            { "Variable": { "VarName": "n" }
+                                            , "Value": 
+                                                { "Operator": "SubAddExp"
+                                                , "Left": 
+                                                    { "VarName": "n" }
+                                                , "Right": 
+                                                    { "IntLiteral": 1 }
+                                                }
+                                             }
+                                          }
+                                        ]
+                                }
+                              }
+                            ]
+                        }  }
+                    , { "MethodImpl":
+                        { "Signature":
+                          { "MethodSig":
+                            { "Name": "initDAO"
+                            , "ReturnType": "Bool"
+                            , "Params": 
+                                [ ]
+                                
+                            }
+                          }
+                        , "Body":
+                                [ { "AssignStatement":
+                                    { "Variable": { "FieldName": "dao" }
+                                    , "Value": 
+                                         { "NewExp": 
+                                            { "IsLocal": true
+                                            , "ClassName": "DAO"
+                                            , "Params": 
+                                                [ "NullExp"
+                                                ]
+                                            }
+                                        }
+                                     }
+                                  }
+                                , { "VarDeclStmt":
+                                    { "VarName": "b"
+                                    , "Type": "Fut"
+                                    , "InitExp":  { "AsyncCall": 
+                                        { "Callee": { "FieldName": "dao" }
+                                        , "Method": "initDB"
+                                        , "Params": 
+                                            [ ]
+                                        }
+                                    }
+                                    
+                                    }
+                                  }
+                                , { "AwaitStmt": 
+                                    { "ClaimGuard": 
+                                        { "VarName": "b" }}
+                                }
+                                , { "ReturnStmt": 
+                                    { "DataConstructor": "True" }
+                                    
+                                  }
+                                ]
+                            }  }
+                        ]
+                      }
+                    , { "ClassName": "Handler"
+                      , "Parameters":
+                        [ { "ParamName": "dao"
+                          , "ParamType": "DAOInterface"  }
+                        ]
+                      , "Fields":
+                        [ ]
+                      , "Methods":
+                        [ { "MethodImpl":
+                            { "Signature":
+                              { "MethodSig":
+                                { "Name": "run2"
+                                , "ReturnType": "Unit"
+                                , "Params": 
+                                    [ { "ParamName": "m"
+                                      , "ParamType": "Int"  }
+                                    ]
+                                    
+                                }
+                              }
+                            , "Body":
+                                    [ { "WhileStmt":
+                                        { "Condition": 
+                                            { "Operator": "GTExp"
+                                            , "Left": 
+                                                { "VarName": "m" }
+                                            , "Right": 
+                                                { "IntLiteral": 0 }
+                                            }
+                                        , "Body": 
+                                                [ { "ExprStmt": 
+                                                     { "AsyncCall": 
+                                                        { "Callee": { "FieldName": "dao" }
+                                                        , "Method": "query"
+                                                        , "Params": 
+                                                            [ { "VarName": "m" }]
+                                                        }
+                                                    }
+                                                    
+                                                  }
+                                                , { "AssignStatement":
+                                                    { "Variable": { "VarName": "m" }
+                                                    , "Value": 
+                                                        { "Operator": "SubAddExp"
+                                                        , "Left": 
+                                                            { "VarName": "m" }
+                                                        , "Right": 
+                                                            { "IntLiteral": 1 }
+                                                        }
+                                                     }
+                                                  }
+                                                ]
+                                        }
+                                      }
+                                    ]
+                                }  }
+                            ]
+                          }
+                        , { "ClassName": "DAO"
+                          , "Parameters":
+                            [ { "ParamName": "db"
+                              , "ParamType": "DBInterface"  }
+                            ]
+                          , "Fields":
+                            [ ]
+                          , "Methods":
+                            [ { "MethodImpl":
+                                { "Signature":
+                                  { "MethodSig":
+                                    { "Name": "initDB"
+                                    , "ReturnType": "Bool"
+                                    , "Params": 
+                                        [ ]
+                                        
+                                    }
+                                  }
+                                , "Body":
+                                        [ { "AssignStatement":
+                                            { "Variable": { "FieldName": "db" }
+                                            , "Value": 
+                                                 { "NewExp": 
+                                                    { "IsLocal": true
+                                                    , "ClassName": "DB"
+                                                    , "Params": 
+                                                        [ ]
+                                                    }
+                                                }
+                                             }
+                                          }
+                                        , { "ReturnStmt": 
+                                            { "DataConstructor": "True" }
+                                            
+                                          }
+                                        ]
+                                    }  }
+                                , { "MethodImpl":
+                                    { "Signature":
+                                      { "MethodSig":
+                                        { "Name": "query"
+                                        , "ReturnType": "Bool"
+                                        , "Params": 
+                                            [ { "ParamName": "m"
+                                              , "ParamType": "Int"  }
+                                            ]
+                                            
+                                        }
+                                      }
+                                    , "Body":
+                                            [ { "ExprStmt": 
+                                                 { "AsyncCall": 
+                                                    { "Callee": { "FieldName": "db" }
+                                                    , "Method": "exec"
+                                                    , "Params": 
+                                                        [ ]
+                                                    }
+                                                }
+                                                
+                                              }
+                                            , { "ReturnStmt": 
+                                                { "DataConstructor": "True" }
+                                                
+                                              }
+                                            ]
+                                        }  }
+                                    ]
+                                  }
+                                , { "InterfaceDecl":
+                                    { "Name": "DBInterface"
+                                    , "Extends": 
+                                    [ "ABS.StdLib.Object"]
+                                    
+                                    , "Methods": 
+                                        [ 
+                                          { "MethodSig":
+                                            { "Name": "exec"
+                                            , "ReturnType": "Unit"
+                                            , "Params": 
+                                                [ ]
+                                                
+                                            }
+                                          }
+                                        ]
+                                        
+                                    }
+                                }
+                                , { "ClassName": "DB"
+                                  , "Parameters":
+                                    [ ]
+                                  , "Fields":
+                                    [ ]
+                                  , "Methods":
+                                    [ { "MethodImpl":
+                                        { "Signature":
+                                          { "MethodSig":
+                                            { "Name": "exec"
+                                            , "ReturnType": "Unit"
+                                            , "Params": 
+                                                [ ]
+                                                
+                                            }
+                                          }
+                                        , "Body":
+                                                [ ]
+                                            }  }
+                                        ]
+                                      }
+                                    ]
+                                }
+                            }

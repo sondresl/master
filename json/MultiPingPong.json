@@ -1,0 +1,422 @@
+{ "ModuleDecl":
+    { "ModuleName": "PingPong"
+    , "Declarations": 
+        [ { "NotSupported": "ParametricDataTypeDecl" }
+        , { "NotSupported": "ParametricDataTypeDecl" }
+        , { "InterfaceDecl":
+            { "Name": "Ping"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "ping"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "m"
+                          , "ParamType": "PingMsg"  }
+                        , { "ParamName": "po"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "initPing"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "Pong"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "hello"
+                    , "ReturnType": "PongSession"
+                    , "Params": 
+                        [ { "ParamName": "ping"
+                          , "ParamType": "Ping"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "sessionFinished"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "s"
+                          , "ParamType": "PongSession"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "PongSession"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "pong"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "p"
+                          , "ParamType": "Ping"  }
+                        , { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        , { "ParamName": "m"
+                          , "ParamType": "PongMsg"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "initPongSession"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "ping"
+                          , "ParamType": "Ping"  }
+                        , { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "PingImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "PongSession"
+              , "FieldName": "pongSession"
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "initPing"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "fu"
+                            , "Type": "Fut"
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "VarName": "pong" }
+                                , "Method": "hello"
+                                , "Params": 
+                                    [ "ThisExp"
+                                    ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "pongSession" }
+                            , "Value": 
+                                { "GetExp":
+                                    { "VarName": "fu" }}
+                             }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "ping"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "msg"
+                          , "ParamType": "PingMsg"  }
+                        , { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "reply"
+                            , "Type": "PongMsg"
+                            , "InitExp": { "NotSupported": "CaseExp" }
+                            
+                            }
+                          }
+                        , { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "NotEqExp"
+                                , "Left": 
+                                    { "VarName": "reply" }
+                                , "Right": 
+                                    { "DataConstructor": "NoMsg" }
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "VarDeclStmt":
+                                        { "VarName": "fu"
+                                        , "Type": "Fut"
+                                        , "InitExp":  { "AsyncCall": 
+                                            { "Callee": { "FieldName": "pongSession" }
+                                            , "Method": "pong"
+                                            , "Params": 
+                                                [ "ThisExp"
+                                                , { "VarName": "pong" }, { "VarName": "reply" }]
+                                            }
+                                        }
+                                        
+                                        }
+                                      }
+                                    , { "ExprStmt": 
+                                        { "GetExp":
+                                            { "VarName": "fu" }}
+                                        
+                                      }
+                                    ]
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "PongSessionImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "initPongSession"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "ping"
+                          , "ParamType": "Ping"  }
+                        , { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": { "VarName": "ping" }
+                                , "Method": "ping"
+                                , "Params": 
+                                    [ { "DataConstructor": "HelloPing" }
+                                    , { "VarName": "pong" }]
+                                }
+                            }
+                            
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "pong"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "ping"
+                          , "ParamType": "Ping"  }
+                        , { "ParamName": "pong"
+                          , "ParamType": "Pong"  }
+                        , { "ParamName": "msg"
+                          , "ParamType": "PongMsg"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "EqExp"
+                                , "Left": 
+                                    { "VarName": "msg" }
+                                , "Right": 
+                                    { "DataConstructor": "HowAreYou" }
+                                    
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": { "VarName": "ping" }
+                                            , "Method": "ping"
+                                            , "Params": 
+                                                [ { "DataConstructor": "Fine" }
+                                                , { "VarName": "pong" }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            , "Else": 
+                                    [ { "VarDeclStmt":
+                                        { "VarName": "f"
+                                        , "Type": "Fut"
+                                        , "InitExp":  { "AsyncCall": 
+                                            { "Callee": { "VarName": "ping" }
+                                            , "Method": "ping"
+                                            , "Params": 
+                                                [ { "DataConstructor": "ByePing" }
+                                                , { "VarName": "pong" }]
+                                            }
+                                        }
+                                        
+                                        }
+                                      }
+                                    , { "ExprStmt": 
+                                        { "GetExp":
+                                            { "VarName": "f" }}
+                                        
+                                      }
+                                    , { "ExprStmt": 
+                                         { "SyncCall": 
+                                            { "Callee":{ "VarName": "pong" }
+                                            , "Method": "sessionFinished"
+                                            , "Params": 
+                                                [ "ThisExp"
+                                                ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "PongImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "List"
+              , "FieldName": "sessions"
+              , "InitExp": { "DataConstructor": "Nil" }
+            
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "hello"
+                    , "ReturnType": "PongSession"
+                    , "Params": 
+                        [ { "ParamName": "ping"
+                          , "ParamType": "Ping"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "s"
+                            , "Type": "PongSession"
+                            , "InitExp":  { "NewExp": 
+                                { "IsLocal": true
+                                , "ClassName": "PongSessionImpl"
+                                , "Params": 
+                                    [ ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                             { "AsyncCall": 
+                                { "Callee": { "VarName": "s" }
+                                , "Method": "initPongSession"
+                                , "Params": 
+                                    [ { "VarName": "ping" }, "ThisExp"
+                                    ]
+                                }
+                            }
+                            
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "sessions" }
+                            , "Value": 
+                                { "FnApp":
+                                    { "FnName": "appendright"
+                                    , "FnArgs": 
+                                        [ { "FieldName": "sessions" }, { "VarName": "s" }]
+                                    }
+                                  }
+                             }
+                          }
+                        , { "ReturnStmt": 
+                            { "VarName": "s" }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "sessionFinished"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "s"
+                          , "ParamType": "PongSession"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "sessions" }
+                            , "Value": 
+                                { "FnApp":
+                                    { "FnName": "without"
+                                    , "FnArgs": 
+                                        [ { "FieldName": "sessions" }, { "VarName": "s" }]
+                                    }
+                                  }
+                             }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}

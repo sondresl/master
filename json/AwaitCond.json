@@ -1,0 +1,205 @@
+{ "ModuleDecl":
+    { "ModuleName": "AwaitCond"
+    , "Declarations": 
+        [ { "InterfaceDecl":
+            { "Name": "Ai"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "getField"
+                    , "ReturnType": "Bi"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "Bi"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "obtainFieldAndUse"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "a"
+                          , "ParamType": "Ai"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "setOtherField"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "x"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "A"
+          , "Parameters":
+            [ { "ParamName": "b"
+              , "ParamType": "Bi"  }
+            ]
+          , "Fields":
+            [ { "Type": "Bi"
+              , "FieldName": "field1"
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "run"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "f"
+                            , "Type": "Fut"
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "FieldName": "b" }
+                                , "Method": "setOtherField"
+                                , "Params": 
+                                    [ { "IntLiteral": 1 }]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                            { "GetExp":
+                                { "VarName": "f" }}
+                            
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "field1" }
+                            , "Value": 
+                                 { "NewExp": 
+                                    { "IsLocal": true
+                                    , "ClassName": "B"
+                                    , "Params": 
+                                        [ ]
+                                    }
+                                }
+                             }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "getField"
+                    , "ReturnType": "Bi"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AwaitStmt": 
+                            { "ExpGuard":
+                                { "Operator": "NotEqExp"
+                                , "Left": 
+                                    { "FieldName": "field1" }
+                                , "Right": 
+                                    "NullExp"
+                                    
+                                }
+                            }
+                        }
+                        , { "ReturnStmt": 
+                            { "FieldName": "field1" }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "B"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "fx"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "obtainFieldAndUse"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "a"
+                          , "ParamType": "Ai"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "f"
+                            , "Type": "Fut"
+                            , "InitExp":  { "AsyncCall": 
+                                { "Callee": { "VarName": "a" }
+                                , "Method": "getField"
+                                , "Params": 
+                                    [ ]
+                                }
+                            }
+                            
+                            }
+                          }
+                        , { "ExprStmt": 
+                            { "GetExp":
+                                { "VarName": "f" }}
+                            
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "setOtherField"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "x"
+                          , "ParamType": "Int"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AssignStatement":
+                            { "Variable": { "FieldName": "fx" }
+                            , "Value": 
+                                { "VarName": "x" } }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}

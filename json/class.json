@@ -1,0 +1,63 @@
+{ "ClassName": "CountImpl"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "increment"
+              , "ReturnType": "Int"
+              , "Params":
+                [ { "ParamName": "x"
+                  , "Type": "Int"
+                  }
+                ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value":
+                            { "Operator": "AddAddExp"
+                            , "Left": { "FieldName": "a" }
+                            , "Right": { "IntLiteral": 10 }
+                            }
+                          }
+                      }
+                    , { "ReturnStmt":
+                        { "FieldName": "a" }
+                      }
+                    ]
+              }
+            , { "MethodName": "decrement"
+              , "ReturnType": "Int"
+              , "Params":
+                [ ]
+              , "Body":
+                    [ { "NotSupported": "VarDeclStmt" }
+                    , { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value":
+                            { "Operator": "SubAddExp"
+                            , "Left": { "FieldName": "a" }
+                            , "Right": { "NotSupported": "VarUse" }
+
+                            }
+                          }
+                      }
+                    , { "ReturnStmt":
+                        { "FieldName": "a" }
+                      }
+                    ]
+              }
+            , { "MethodName": "val"
+              , "ReturnType": "Unit"
+              , "Params":
+                [ ]
+              , "Body":
+                    [ { "NotSupported": "FnApp" }
+                    ]
+              }
+            ]
+}

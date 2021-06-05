@@ -1,0 +1,57 @@
+{ "ModuleDecl":
+    { "ModuleName": "MethodArgs"
+    , "Declarations": 
+        [ { "ClassName": "Bools"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "Int"
+              , "FieldName": "a"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodName": "add"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ { "ParamName": "i"
+                  , "ParamType": "Int"
+                  }
+                ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value": 
+                            { "Operator": "AddAddExp"
+                            , "Left": 
+                                { "FieldName": "a" }
+                            , "Right": 
+                                { "VarName": "i" }
+                            }
+                          }
+                      }
+                    ]
+              }
+            , { "MethodName": "sub"
+              , "ReturnType": "Unit"
+              , "Params": 
+                [ ]
+              , "Body":
+                    [ { "AssignStatement":
+                        { "Variable": { "FieldName": "a" }
+                        , "Value": 
+                            { "Operator": "SubAddExp"
+                            , "Left": 
+                                { "FieldName": "a" }
+                            , "Right": 
+                                { "IntLiteral": 1 }
+                            }
+                          }
+                      }
+                    ]
+              }
+            ]
+          }
+        ]
+    }
+}

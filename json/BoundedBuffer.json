@@ -1,0 +1,351 @@
+{ "ModuleDecl":
+    { "ModuleName": "BoundedBuffer"
+    , "Declarations": 
+        [ { "TypeSynDecl": 
+            { "Name": "Data"
+            , "Value": "Int"}
+        }, { "NotSupported": "ParametricDataTypeDecl" }
+        , { "NotSupported": "FunctionDecl" }
+        , { "NotSupported": "FunctionDecl" }
+        , { "NotSupported": "FunctionDecl" }
+        , { "NotSupported": "FunctionDecl" }
+        , { "InterfaceDecl":
+            { "Name": "Buffer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "append"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                , 
+                  { "MethodSig":
+                    { "Name": "remove"
+                    , "ReturnType": "Data"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "Consumer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "loop"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "InterfaceDecl":
+            { "Name": "Producer"
+            , "Extends": 
+            [ "ABS.StdLib.Object"]
+            
+            , "Methods": 
+                [ 
+                  { "MethodSig":
+                    { "Name": "loop"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                ]
+                
+            }
+        }
+        , { "ClassName": "BoundedBuffer"
+          , "Parameters":
+            [ ]
+          , "Fields":
+            [ { "Type": "DataList"
+              , "FieldName": "buffer"
+              , "InitExp": { "DataConstructor": "DataNil" }
+            
+              }
+            , { "Type": "Int"
+              , "FieldName": "max"
+              , "InitExp": { "IntLiteral": 10 }
+              }
+            , { "Type": "Int"
+              , "FieldName": "n"
+              , "InitExp": { "IntLiteral": 0 }
+              }
+            ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "append"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "AwaitStmt": 
+                            { "ExpGuard":
+                                { "Operator": "LTExp"
+                                , "Left": 
+                                    { "FieldName": "n" }
+                                , "Right": 
+                                    { "FieldName": "max" }
+                                }
+                            }
+                        }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "buffer" }
+                            , "Value": 
+                                { "FnApp":
+                                    { "FnName": "appendData"
+                                    , "FnArgs": 
+                                        [ { "VarName": "d" }, { "FieldName": "buffer" }]
+                                    }
+                                  }
+                             }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "n" }
+                            , "Value": 
+                                { "Operator": "AddAddExp"
+                                , "Left": 
+                                    { "FieldName": "n" }
+                                , "Right": 
+                                    { "IntLiteral": 1 }
+                                }
+                             }
+                          }
+                        ]
+                }  }
+            , { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "remove"
+                    , "ReturnType": "Data"
+                    , "Params": 
+                        [ ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "VarDeclStmt":
+                            { "VarName": "d"
+                            , "Type": "Data"
+                            , "InitExp": { "IntLiteral": 0 }
+                            }
+                          }
+                        , { "AwaitStmt": 
+                            { "ExpGuard":
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "FieldName": "n" }
+                                , "Right": 
+                                    { "IntLiteral": 0 }
+                                }
+                            }
+                        }
+                        , { "AssignStatement":
+                            { "Variable": { "VarName": "d" }
+                            , "Value": 
+                                { "FnApp":
+                                    { "FnName": "dataHead"
+                                    , "FnArgs": 
+                                        [ { "FieldName": "buffer" }]
+                                    }
+                                  }
+                             }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "buffer" }
+                            , "Value": 
+                                { "FnApp":
+                                    { "FnName": "dataTail"
+                                    , "FnArgs": 
+                                        [ { "FieldName": "buffer" }]
+                                    }
+                                  }
+                             }
+                          }
+                        , { "AssignStatement":
+                            { "Variable": { "FieldName": "n" }
+                            , "Value": 
+                                { "Operator": "SubAddExp"
+                                , "Left": 
+                                    { "FieldName": "n" }
+                                , "Right": 
+                                    { "IntLiteral": 1 }
+                                }
+                             }
+                          }
+                        , { "ReturnStmt": 
+                            { "VarName": "d" }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "ProducerImpl"
+          , "Parameters":
+            [ { "ParamName": "b"
+              , "ParamType": "Buffer"  }
+            ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "loop"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "VarName": "d" }
+                                , "Right": 
+                                    { "IntLiteral": 0 }
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": { "FieldName": "b" }
+                                            , "Method": "append"
+                                            , "Params": 
+                                                [ { "VarName": "d" }]
+                                            }
+                                        }
+                                        
+                                      }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "loop"
+                                            , "Params": 
+                                                [ { "Operator": "SubAddExp"
+                                                , "Left": 
+                                                    { "VarName": "d" }
+                                                , "Right": 
+                                                    { "IntLiteral": 1 }
+                                                }
+                                                ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        , { "ClassName": "ConsumerImpl"
+          , "Parameters":
+            [ { "ParamName": "b"
+              , "ParamType": "Buffer"  }
+            ]
+          , "Fields":
+            [ ]
+          , "Methods":
+            [ { "MethodImpl":
+                { "Signature":
+                  { "MethodSig":
+                    { "Name": "loop"
+                    , "ReturnType": "Unit"
+                    , "Params": 
+                        [ { "ParamName": "d"
+                          , "ParamType": "Data"  }
+                        ]
+                        
+                    }
+                  }
+                , "Body":
+                        [ { "IfStmt":
+                            { "Condition": 
+                                { "Operator": "GTExp"
+                                , "Left": 
+                                    { "VarName": "d" }
+                                , "Right": 
+                                    { "IntLiteral": 0 }
+                                }
+                            
+                            , "Then": 
+                                    [ { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": { "FieldName": "b" }
+                                            , "Method": "remove"
+                                            , "Params": 
+                                                [ ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    , { "ExprStmt": 
+                                         { "AsyncCall": 
+                                            { "Callee": "ThisExp"
+                                            
+                                            , "Method": "loop"
+                                            , "Params": 
+                                                [ { "Operator": "SubAddExp"
+                                                , "Left": 
+                                                    { "VarName": "d" }
+                                                , "Right": 
+                                                    { "IntLiteral": 1 }
+                                                }
+                                                ]
+                                            }
+                                        }
+                                        
+                                      }
+                                    ]
+                            
+                            }
+                          }
+                        ]
+                }  }
+            ]
+          }
+        ]
+    }
+}
